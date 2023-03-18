@@ -1061,10 +1061,10 @@ Camera:
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
-    y: 0.08949098
-    width: 1
-    height: 0.82101804
+    x: 0.09734711
+    y: 0
+    width: 0.8053058
+    height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -1273,7 +1273,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 705181307}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.55, y: 0, z: 0}
+  m_LocalPosition: {x: -3.7, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1318,6 +1318,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab070b536019396409e9bbadb126a120, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isRight: 0
 --- !u!1 &784802178
 GameObject:
   m_ObjectHideFlags: 0
@@ -1344,7 +1345,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 784802178}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.55, y: 0, z: 0}
+  m_LocalPosition: {x: 3.5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1363,6 +1364,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab070b536019396409e9bbadb126a120, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isRight: 1
 --- !u!61 &784802181
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1584,6 +1586,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentStage: 1
+  minEnemyCount: 5
+  maxEnemyCount: 10
+  gridSpacing: 0.3
+  enemyLists:
+  - name: 1-3
+    enemyPrefabs:
+    - {fileID: 5508347574834531377, guid: d620a0a66af3b2d429d8f0863bc02242, type: 3}
+    - {fileID: 1166219321613283664, guid: 335e6321540d2e440a5a0c6d58e7523f, type: 3}
+    - {fileID: 4185646341323294629, guid: 984fb6c9e55caf04aae5eff751623015, type: 3}
+    spawnProbabilities:
+    - 0.1
+    - 0.2
+    - 0.3
+  - name: 4-6
+    enemyPrefabs:
+    - {fileID: 2337708109826139462, guid: 0d138344667af004f9c8547d17c6d8cb, type: 3}
+    - {fileID: 5629223453098305778, guid: fe32260d8558e9642bf425e92344ed7a, type: 3}
+    - {fileID: 1443492715263663016, guid: a8f625425b2f14948a64c71e6eac4be5, type: 3}
+    spawnProbabilities:
+    - 0.1
+    - 0.2
+    - 0.3
+  - name: 7-10
+    enemyPrefabs:
+    - {fileID: 1567753021864829948, guid: f04542378b5bf2248913c751a42ac347, type: 3}
+    - {fileID: 2198682097177178323, guid: 9974f3aeed05d4645a50ee1b8aee7ebf, type: 3}
+    spawnProbabilities:
+    - 0.1
+    - 0.2
+  startStages: 010000000400000007000000
+  endStages: 03000000060000000a000000
 --- !u!1 &1250798470
 GameObject:
   m_ObjectHideFlags: 0
@@ -1697,9 +1730,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1258469926}
-  - component: {fileID: 1258469927}
   - component: {fileID: 1258469928}
   - component: {fileID: 1258469929}
+  - component: {fileID: 1258469927}
+  - component: {fileID: 1258469930}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1785,6 +1819,18 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &1258469930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1258469925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebb20f62d42d6c147bd74c4d7738e6b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1483300775
 GameObject:
   m_ObjectHideFlags: 0

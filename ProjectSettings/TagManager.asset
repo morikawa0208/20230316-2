@@ -6,6 +6,7 @@ TagManager:
   tags:
   - StageUp
   - StageDown
+  - Enemy
   layers:
   - Default
   - TransparentFX
