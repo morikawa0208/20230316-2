@@ -1586,35 +1586,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentStage: 1
-  minEnemyCount: 5
-  maxEnemyCount: 10
+  minEnemyCount: 1
+  maxEnemyCount: 3
   gridSpacing: 0.3
-  enemyLists:
-  - name: 1-3
-    enemyPrefabs:
-    - {fileID: 5508347574834531377, guid: d620a0a66af3b2d429d8f0863bc02242, type: 3}
-    - {fileID: 1166219321613283664, guid: 335e6321540d2e440a5a0c6d58e7523f, type: 3}
-    - {fileID: 4185646341323294629, guid: 984fb6c9e55caf04aae5eff751623015, type: 3}
-    spawnProbabilities:
-    - 0.1
-    - 0.2
-    - 0.3
-  - name: 4-6
-    enemyPrefabs:
-    - {fileID: 2337708109826139462, guid: 0d138344667af004f9c8547d17c6d8cb, type: 3}
-    - {fileID: 5629223453098305778, guid: fe32260d8558e9642bf425e92344ed7a, type: 3}
-    - {fileID: 1443492715263663016, guid: a8f625425b2f14948a64c71e6eac4be5, type: 3}
-    spawnProbabilities:
-    - 0.1
-    - 0.2
-    - 0.3
-  - name: 7-10
-    enemyPrefabs:
-    - {fileID: 1567753021864829948, guid: f04542378b5bf2248913c751a42ac347, type: 3}
-    - {fileID: 2198682097177178323, guid: 9974f3aeed05d4645a50ee1b8aee7ebf, type: 3}
-    spawnProbabilities:
-    - 0.1
-    - 0.2
+  enemyLists: []
   startStages: 010000000400000007000000
   endStages: 03000000060000000a000000
 --- !u!1 &1250798470
