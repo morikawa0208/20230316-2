@@ -4,25 +4,47 @@ using UnityEngine;
 
 public class StageManager : MonoBehaviour
 {
-    public static StageManager Instance { get; private set; }
+    public static StageManager Instance { get; private set; } // シングルトンインスタンス
 
-    public int currentStage = 1;
+    public int currentStage = 1; // 現在のステージ番号
 
-    [SerializeField] private int minEnemyCount = 1;
-    [SerializeField] private int maxEnemyCount = 3;
+    [SerializeField] private int minEnemyCount = 1; // 敵の最小数
+    [SerializeField] private int maxEnemyCount = 3; // 敵の最大数
 
-    [SerializeField] private float gridSpacing = 0.3f;
-    private StageController stageController;
-    [SerializeField] private List<EnemyList> enemyLists = new List<EnemyList>();
+    private const float MinXRange = -2.4f;
+    private const float MaxXRange = 2.4f;
+    private const float MinYRange = 1.9f;
+    private const float MaxYRange = 2.5f;
+
+    private float gridSpacing = 0.3f; // グリッド間のスペース
+    private StageController stageController; // StageControllerの参照
+    [SerializeField] private List<EnemyList> enemyLists = new List<EnemyList>(); // 敵リストのリスト
 
     [System.Serializable]
     public class EnemyList
     {
-        public int startStage;
-        public int endStage;
-        public string name;
-        public List<GameObject> enemyPrefabs = new List<GameObject>();
-        public List<float> spawnProbabilities = new List<float>();
+        public int startStage; // 開始ステージ
+        public int endStage; // 終了ステージ
+        public string name; // 敵リストの名前
+        public List<GameObject> enemyPrefabs = new List<GameObject>(); // 敵プレファブのリスト
+        public List<float> spawnProbabilities = new List<float>(); // スポーン確率のリスト
+
+        // スポーン確率に基づいてランダムな敵を返す
+        public GameObject GetRandomEnemy()
+        {
+            float randomValue = Random.Range(0f, spawnProbabilities.Sum());
+            float spawnProbabilitySum = 0f;
+            for (int i = 0; i < enemyPrefabs.Count; i++)
+            {
+                spawnProbabilitySum += spawnProbabilities[i];
+                if (randomValue <= spawnProbabilitySum)
+                {
+                    return enemyPrefabs[i];
+                }
+            }
+
+            return null;
+        }
     }
 
     private void Awake()
@@ -33,14 +55,28 @@ public class StageManager : MonoBehaviour
             return;
         }
 
-        Instance = this;
-        stageController = FindObjectOfType<StageController>();
+        Instance = this; // シングルトンインスタンスの設定
     }
 
-    public void ChangeStage(int stage)
+    // StageControllerを設定する
+    public void SetStageController(StageController controller)
     {
+        stageController = controller;
+    }
+
+    // ステージを変更する
+    public void ChangeStage(int stage, bool isRight)
+    {
+        int previousStage = currentStage;
         currentStage += stage;
         Debug.Log($"Current Stage: {currentStage}");
+
+        ClearEnemies();
+
+        if (currentStage == 1)
+        {
+            return;
+        }
 
         if (enemyLists.Count == 0) return;
 
@@ -49,47 +85,54 @@ public class StageManager : MonoBehaviour
 
         Debug.Log(enemyList.name);
 
+        SpawnEnemies(enemyList, isRight);
+    }
+
+    // シーン内のすべての敵を削除する
+    private void ClearEnemies()
+    {
         var enemies = GameObject.FindGameObjectsWithTag("Enemy");
         foreach (var enemy in enemies)
         {
             Destroy(enemy);
         }
-
-        var positions = new HashSet<Vector2>();
-
-        int enemyCount = Random.Range(minEnemyCount, maxEnemyCount + 1);
-        for (int i = 0; i < enemyCount; i++)
-        {
-            Vector2 position;
-            do
-            {
-                float x = Mathf.Round(Random.Range(-2.4f, 2.4f) / gridSpacing) * gridSpacing;
-                float y = Mathf.Round(Random.Range(1.9f, 2.5f) / gridSpacing) * gridSpacing;
-                position = new Vector2(x, y);
-            } while (positions.Contains(position));
-            positions.Add(position);
-
-            SpawnEnemyAtPosition(enemyList, position);
-        }
     }
 
-    private void SpawnEnemyAtPosition(EnemyList enemyList, Vector2 position)
+    // 与えられた敵リストに基づいて敵をシーンにスポーンさせる
+    private void SpawnEnemies(EnemyList enemyList, bool isRight)
     {
-        float randomValue = Random.Range(0f, enemyList.spawnProbabilities.Sum());
-        float spawnProbabilitySum = 0f;
-        for (int i = 0; i < enemyList.enemyPrefabs.Count; i++)
+        int enemyCount = Random.Range(minEnemyCount, maxEnemyCount + 1);
+        var positions = new HashSet<Vector2>();
+
+        for (int i = 0; i < enemyCount; i++)
         {
-            spawnProbabilitySum += enemyList.spawnProbabilities[i];
-            if (randomValue <= spawnProbabilitySum)
+            Vector2 position = GetUniqueRandomPosition(positions);
+            positions.Add(position);
+
+            GameObject enemyPrefab = enemyList.GetRandomEnemy();
+            if (enemyPrefab != null)
             {
-                GameObject enemyPrefab = enemyList.enemyPrefabs[i];
-                Quaternion rotation = stageController.isRight ? Quaternion.Euler(0f, 180f, 0f) : Quaternion.identity;
+                Quaternion rotation = !isRight ? Quaternion.Euler(0f, 180f, 0f) : Quaternion.identity;
                 Instantiate(enemyPrefab, (Vector3)position, rotation);
-                break;
             }
         }
     }
 
+    // 与えられた位置のセットに含まれていないユニークなランダム位置を返す
+    private Vector2 GetUniqueRandomPosition(HashSet<Vector2> positions)
+    {
+        Vector2 position;
+        do
+        {
+            float x = Mathf.Round(Random.Range(MinXRange, MaxXRange) / gridSpacing) * gridSpacing;
+            float y = Mathf.Round(Random.Range(MinYRange, MaxYRange) / gridSpacing) * gridSpacing;
+            position = new Vector2(x, y);
+        } while (positions.Contains(position));
+
+        return position;
+    }
+
+     // 現在のステージに基づいて敵リストを取得する
     private EnemyList GetEnemyListByCurrentStage()
     {
         return enemyLists.FirstOrDefault(enemyList => currentStage >= enemyList.startStage && currentStage <= enemyList.endStage);

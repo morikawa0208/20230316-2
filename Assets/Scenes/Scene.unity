@@ -1061,10 +1061,10 @@ Camera:
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.09734711
-    y: 0
-    width: 0.8053058
-    height: 1
+    x: 0
+    y: 0.08949098
+    width: 1
+    height: 0.82101804
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -1589,9 +1589,38 @@ MonoBehaviour:
   minEnemyCount: 1
   maxEnemyCount: 3
   gridSpacing: 0.3
-  enemyLists: []
-  startStages: 010000000400000007000000
-  endStages: 03000000060000000a000000
+  enemyLists:
+  - startStage: 2
+    endStage: 4
+    name: 2-4
+    enemyPrefabs:
+    - {fileID: 5508347574834531377, guid: d620a0a66af3b2d429d8f0863bc02242, type: 3}
+    - {fileID: 1166219321613283664, guid: 335e6321540d2e440a5a0c6d58e7523f, type: 3}
+    - {fileID: 4185646341323294629, guid: 984fb6c9e55caf04aae5eff751623015, type: 3}
+    spawnProbabilities:
+    - 1
+    - 1
+    - 1
+  - startStage: 5
+    endStage: 7
+    name: 5-7
+    enemyPrefabs:
+    - {fileID: 2337708109826139462, guid: 0d138344667af004f9c8547d17c6d8cb, type: 3}
+    - {fileID: 5629223453098305778, guid: fe32260d8558e9642bf425e92344ed7a, type: 3}
+    - {fileID: 1443492715263663016, guid: a8f625425b2f14948a64c71e6eac4be5, type: 3}
+    spawnProbabilities:
+    - 1
+    - 1
+    - 1
+  - startStage: 8
+    endStage: 10
+    name: 8-10
+    enemyPrefabs:
+    - {fileID: 1567753021864829948, guid: f04542378b5bf2248913c751a42ac347, type: 3}
+    - {fileID: 2198682097177178323, guid: 9974f3aeed05d4645a50ee1b8aee7ebf, type: 3}
+    spawnProbabilities:
+    - 1
+    - 1
 --- !u!1 &1250798470
 GameObject:
   m_ObjectHideFlags: 0
