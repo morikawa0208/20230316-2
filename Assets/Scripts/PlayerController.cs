@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 0.3f;
     public float minY = 1.9f;
     public float maxY = 2.5f;
-    //public GameManager gameManager;
+    public TurnManager turnManager;
     public PlayerStageMove playerStageMove;
 
     private int direction = 1; // プレイヤーの向きを保持するための変数
@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         playerStageMove = GetComponent<PlayerStageMove>();
+        //turnManager = FindObjectOfType<TurnManager>();
     }
 
     public void MoveUp()
@@ -26,8 +27,8 @@ public class PlayerController : MonoBehaviour
         targetPosition.y = Mathf.Clamp(targetPosition.y, minY, maxY);
         transform.DOMove(targetPosition, 0.1f).SetEase(Ease.Linear).OnComplete(() => {
             isMoving = false;
-            //gameManager.EndPlayerTurn();
         });
+        turnManager.ChangeTurn();//プレイヤーのターン終了
     }
 
     public void MoveDown()
@@ -39,8 +40,8 @@ public class PlayerController : MonoBehaviour
         targetPosition.y = Mathf.Clamp(targetPosition.y, minY, maxY);
         transform.DOMove(targetPosition, 0.1f).SetEase(Ease.Linear).OnComplete(() => {
             isMoving = false;
-            //gameManager.EndPlayerTurn();
         });
+        turnManager.ChangeTurn();//プレイヤーのターン終了
     }
 
     public void MoveRight()
@@ -53,8 +54,8 @@ public class PlayerController : MonoBehaviour
         Vector3 targetPosition = transform.position + new Vector3(moveSpeed, 0, 0);
         transform.DOMove(targetPosition, 0.1f).SetEase(Ease.Linear).OnComplete(() => {
             isMoving = false;
-            //gameManager.EndPlayerTurn();
         });
+        turnManager.ChangeTurn();//プレイヤーのターン終了
     }
 
     public void MoveLeft()
@@ -73,7 +74,7 @@ public class PlayerController : MonoBehaviour
 
         transform.DOMove(targetPosition, 0.1f).SetEase(Ease.Linear).OnComplete(() => {
             isMoving = false;
-            //gameManager.EndPlayerTurn();
         });
+        turnManager.ChangeTurn();//プレイヤーのターン終了
     }
 }
