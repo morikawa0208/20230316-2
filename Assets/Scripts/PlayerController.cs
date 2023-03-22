@@ -1,53 +1,79 @@
 using UnityEngine;
-using UnityEngine.UI;
+using DG.Tweening;
 
-//移動ボタンを押した時に対応する方向へプレイヤーが移動するスクリプト
 public class PlayerController : MonoBehaviour
 {
     public float moveSpeed = 0.3f;
     public float minY = 1.9f;
     public float maxY = 2.5f;
+    //public GameManager gameManager;
+    public PlayerStageMove playerStageMove;
 
     private int direction = 1; // プレイヤーの向きを保持するための変数
+    private bool isMoving = false;
+
+    private void Start()
+    {
+        playerStageMove = GetComponent<PlayerStageMove>();
+    }
 
     public void MoveUp()
     {
-        Vector3 position = transform.position;
-        position.y += moveSpeed;
-        position.y = Mathf.Clamp(position.y, minY, maxY);
-        transform.position = position;
+        if (isMoving) return;
+
+        isMoving = true;
+        Vector3 targetPosition = transform.position + new Vector3(0, moveSpeed, 0);
+        targetPosition.y = Mathf.Clamp(targetPosition.y, minY, maxY);
+        transform.DOMove(targetPosition, 0.1f).SetEase(Ease.Linear).OnComplete(() => {
+            isMoving = false;
+            //gameManager.EndPlayerTurn();
+        });
     }
 
     public void MoveDown()
     {
-        Vector3 position = transform.position;
-        position.y -= moveSpeed;
-        position.y = Mathf.Clamp(position.y, minY, maxY);
-        transform.position = position;
+        if (isMoving) return;
+
+        isMoving = true;
+        Vector3 targetPosition = transform.position - new Vector3(0, moveSpeed, 0);
+        targetPosition.y = Mathf.Clamp(targetPosition.y, minY, maxY);
+        transform.DOMove(targetPosition, 0.1f).SetEase(Ease.Linear).OnComplete(() => {
+            isMoving = false;
+            //gameManager.EndPlayerTurn();
+        });
     }
 
     public void MoveRight()
     {
-        direction = -1; // 向きを反転する
-        Vector3 position = transform.position;
-        position.x += moveSpeed;
-        transform.position = position;
-        transform.localScale = new Vector3(direction, transform.localScale.y, transform.localScale.z); // スケールを反転する
+        if (isMoving) return;
+
+        isMoving = true;
+        direction = -1;
+        transform.localScale = new Vector3(direction, transform.localScale.y, transform.localScale.z);
+        Vector3 targetPosition = transform.position + new Vector3(moveSpeed, 0, 0);
+        transform.DOMove(targetPosition, 0.1f).SetEase(Ease.Linear).OnComplete(() => {
+            isMoving = false;
+            //gameManager.EndPlayerTurn();
+        });
     }
 
     public void MoveLeft()
     {
-        direction = 1; // 向きを反転する
-        Vector3 position = transform.position;
+        if (isMoving) return;
+
+        isMoving = true;
+        direction = 1;
+        transform.localScale = new Vector3(direction, transform.localScale.y, transform.localScale.z);
+        Vector3 targetPosition = transform.position - new Vector3(moveSpeed, 0, 0);
+
         if (StageManager.Instance.currentStage == 1)
         {
-            position.x = Mathf.Clamp(position.x - moveSpeed, -2.7f, position.x);
+            targetPosition.x = Mathf.Clamp(targetPosition.x, -2.7f, targetPosition.x);
         }
-        else
-        {
-            position.x -= moveSpeed;
-        }
-        transform.position = position;
-        transform.localScale = new Vector3(direction, transform.localScale.y, transform.localScale.z); // スケールを反転する
+
+        transform.DOMove(targetPosition, 0.1f).SetEase(Ease.Linear).OnComplete(() => {
+            isMoving = false;
+            //gameManager.EndPlayerTurn();
+        });
     }
 }
