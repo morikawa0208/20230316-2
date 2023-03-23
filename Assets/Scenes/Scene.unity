@@ -1061,10 +1061,10 @@ Camera:
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
-    y: 0.08949098
-    width: 1
-    height: 0.82101804
+    x: 0.09734711
+    y: 0
+    width: 0.8053058
+    height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -1425,10 +1425,10 @@ RectTransform:
   m_Father: {fileID: 1262691399}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -2175, y: 607.35}
-  m_SizeDelta: {x: 3000, y: 785.3}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: -2175, y: -392.65002}
+  m_SizeDelta: {x: 3000, y: 785.30005}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &810285979
 MonoBehaviour:

@@ -1,7 +1,7 @@
 using UnityEngine;
 using DG.Tweening;
 
-public class PlayerController : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 0.3f;
     public float minY = 1.9f;

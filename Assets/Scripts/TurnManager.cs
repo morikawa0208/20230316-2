@@ -11,6 +11,9 @@ public class TurnManager : MonoBehaviour
         {
             // ここに敵オブジェクトの共通の行動を記述する
             Debug.Log("Turn:Enemy");
+
+            EnemyMovement enemyMovement = enemy.GetComponent<EnemyMovement>();
+            enemyMovement.EnemyMove();//敵の移動
         }   
     }
 }
