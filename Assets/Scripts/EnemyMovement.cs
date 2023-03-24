@@ -1,64 +1,73 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class EnemyMovement : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed = 2f; // 移動速度
-    private Vector2 targetPosition; // 移動先の位置
-    private GameObject player; // プレイヤーオブジェクト
-    private LayerMask enemyLayer;
+    public Transform target; // プレイヤーのTransform
+    public TurnManager turnManager; // TurnManagerスクリプトの参照
+    public float moveDuration = 0.1f; // 移動にかかる時間
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        targetPosition = transform.position; // 最初は移動しない
-        player = GameObject.FindGameObjectWithTag("Player"); // プレイヤーオブジェクトを検索して取得
-        enemyLayer = LayerMask.GetMask("Enemy");
+        // プレイヤーのオブジェクトをタグで検索して参照を設定
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+        if (playerObject != null)
+        {
+            target = playerObject.transform;
+            turnManager = playerObject.GetComponent<TurnManager>(); // TurnManagerコンポーネントを取得
+        }
+        else
+        {
+            Debug.LogError("EnemyMovement: Player object with 'Player' tag not found.");
+        }
     }
 
-    public void EnemyMove()
+     public void EnemyMove()
     {
-        float step = moveSpeed * Time.deltaTime; // 移動速度をフレームレートに依存しないように調整
-        targetPosition = GetNewTargetPosition(); // 新しい移動先を取得する
-        transform.position = Vector2.MoveTowards(transform.position, targetPosition, step); // 新しい移動先に向かって移動する
+        if (target == null || turnManager == null)
+        {
+            Debug.LogError("EnemyMove: target or turnManager is not set.");
+            return;
+        }
+
+        Vector2 currentPosition = transform.position; // 敵の現在の位置を取得
+
+        Vector2 newPosition = GetClosestGridPosition(currentPosition);
+
+        // 敵の位置を更新 (DoTweenでモーションを追加)
+        transform.DOMove(newPosition, moveDuration).SetEase(Ease.Linear);
     }
 
-    // プレイヤーに近づきつつ、他の敵オブジェクトと重ならないように新しい移動先を決める関数
-    private Vector2 GetNewTargetPosition()
+    private Vector2 GetClosestGridPosition(Vector2 currentPosition)
     {
-        Vector2 newPosition = player.transform.position;
-        float distance = Vector2.Distance(transform.position, newPosition);
-
-        if (distance > 0.3f)
+        // 上下左右4方向への移動候補を計算
+        Vector2[] candidates = new Vector2[]
         {
-            // プレイヤーの方向に進む
-            Vector2 direction = (newPosition - (Vector2)transform.position).normalized;
-            float x = direction.x;
-            float y = direction.y;
-            if (Mathf.Abs(x) > Mathf.Abs(y))
+            new Vector2(currentPosition.x, Mathf.Clamp(currentPosition.y + 0.3f, 1.9f, 2.5f)),
+            new Vector2(currentPosition.x, Mathf.Clamp(currentPosition.y - 0.3f, 1.9f, 2.5f)),
+            new Vector2(Mathf.Clamp(currentPosition.x + 0.3f, -2.7f, 2.7f), currentPosition.y),
+            new Vector2(Mathf.Clamp(currentPosition.x - 0.3f, -2.7f, 2.7f), currentPosition.y)
+        };
+
+        // 最もプレイヤーに近い移動候補を選択
+        float minDistance = Mathf.Infinity;
+        Vector2 closestCandidate = currentPosition;
+        foreach (Vector2 candidate in candidates)
+        {
+            // 候補が現在の位置と同じ場合、スキップ
+            if (candidate == currentPosition)
             {
-                newPosition.x = transform.position.x + Mathf.Sign(x) * 0.3f;
-                newPosition.y = transform.position.y;
+                continue;
             }
-            else
+
+            // プレイヤーに近いかどうかを確認
+            float distanceToTarget = Vector2.Distance(candidate, target.position);
+            if (distanceToTarget < minDistance)
             {
-                newPosition.y = transform.position.y + Mathf.Sign(y) * 0.3f;
-                newPosition.x = transform.position.x;
+                minDistance = distanceToTarget;
+                closestCandidate = candidate;
             }
         }
-
-        // 画面外に出ないように位置を制限する
-        newPosition.x = Mathf.Clamp(newPosition.x, -2.7f, 2.7f);
-        newPosition.y = Mathf.Clamp(newPosition.y, 1.9f, 2.5f);
-
-        // 他の敵オブジェクトと重ならないようにする
-        RaycastHit2D hit = Physics2D.Linecast(transform.position, newPosition, enemyLayer);
-        if (hit.collider != null)
-        {
-            return transform.position; // 重なる場合は移動しない
-        }
-
-        return newPosition;
+        return closestCandidate;
     }
 }
