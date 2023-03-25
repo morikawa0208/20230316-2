@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: -832180189959271820}
   - component: {fileID: -3332530439068733947}
   - component: {fileID: -7949013092340266544}
-  m_Layer: 0
+  m_Layer: 28
   m_Name: 01perusya1
   m_TagString: Enemy
   m_Icon: {fileID: 0}

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: -1671695052325485686}
   - component: {fileID: 1805432293546752632}
   - component: {fileID: 164938188416714719}
-  m_Layer: 0
+  m_Layer: 28
   m_Name: 01hato1
   m_TagString: Enemy
   m_Icon: {fileID: 0}

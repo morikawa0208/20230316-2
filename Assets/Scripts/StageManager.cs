@@ -13,8 +13,8 @@ public class StageManager : MonoBehaviour
 
     private const float MinXRange = -2.4f;
     private const float MaxXRange = 2.4f;
-    private const float MinYRange = 1.9f;
-    private const float MaxYRange = 2.5f;
+    private const float MinYRange = 1.6f;
+    private const float MaxYRange = 2.8f;
 
     private float gridSpacing = 0.3f; // グリッド間のスペース
     private StageController stageController; // StageControllerの参照

@@ -43,8 +43,8 @@ public class EnemyMovement : MonoBehaviour
         // 上下左右4方向への移動候補を計算
         Vector2[] candidates = new Vector2[]
         {
-            new Vector2(currentPosition.x, Mathf.Clamp(currentPosition.y + 0.3f, 1.9f, 2.5f)),
-            new Vector2(currentPosition.x, Mathf.Clamp(currentPosition.y - 0.3f, 1.9f, 2.5f)),
+            new Vector2(currentPosition.x, Mathf.Clamp(currentPosition.y + 0.3f, 1.6f, 2.8f)),
+            new Vector2(currentPosition.x, Mathf.Clamp(currentPosition.y - 0.3f, 1.6f, 2.8f)),
             new Vector2(Mathf.Clamp(currentPosition.x + 0.3f, -2.7f, 2.7f), currentPosition.y),
             new Vector2(Mathf.Clamp(currentPosition.x - 0.3f, -2.7f, 2.7f), currentPosition.y)
         };

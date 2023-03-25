@@ -4,8 +4,8 @@ using DG.Tweening;
 public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 0.3f;
-    public float minY = 1.9f;
-    public float maxY = 2.5f;
+    public float minY = 1.6f;
+    public float maxY = 2.8f;
     public TurnManager turnManager;
     public PlayerStageMove playerStageMove;
 
