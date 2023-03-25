@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2638788273993258555}
   - component: {fileID: 6320566779901666166}
   - component: {fileID: -1216365676612174926}
-  - component: {fileID: -7543797775299102237}
+  - component: {fileID: 7305892603121006372}
   m_Layer: 0
   m_Name: 01suko1
   m_TagString: Enemy
@@ -101,7 +101,7 @@ MonoBehaviour:
   target: {fileID: 0}
   turnManager: {fileID: 0}
   moveDuration: 0.1
---- !u!114 &-7543797775299102237
+--- !u!114 &7305892603121006372
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -113,6 +113,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b450e46611fca04419a0ec299a8dcf1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackRange:
-    size: {x: 1, y: 1}
-    offset: {x: 0, y: 0}
+  attackPatterns: []

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4367085777278551115}
   - component: {fileID: 3048781933085877887}
   - component: {fileID: 4069702981598908013}
-  - component: {fileID: 2765209682898994638}
+  - component: {fileID: -957470989303566986}
   m_Layer: 0
   m_Name: 01fundo1
   m_TagString: Enemy
@@ -101,7 +101,7 @@ MonoBehaviour:
   target: {fileID: 0}
   turnManager: {fileID: 0}
   moveDuration: 0.1
---- !u!114 &2765209682898994638
+--- !u!114 &-957470989303566986
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -113,6 +113,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b450e46611fca04419a0ec299a8dcf1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackRange:
-    size: {x: 1, y: 1}
-    offset: {x: 0, y: 0}
+  attackPatterns: []

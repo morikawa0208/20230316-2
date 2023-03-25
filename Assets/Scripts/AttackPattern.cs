@@ -10,5 +10,6 @@ public class AttackRange
 
 public class AttackPattern : MonoBehaviour
 {
+    public string patternName; // 追加
     public List<AttackRange> attackRanges = new List<AttackRange>();
 }

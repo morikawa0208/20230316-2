@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2541256428654801937}
   - component: {fileID: 9038606201218495525}
   - component: {fileID: -209880927616052222}
-  - component: {fileID: -1623268148915273791}
+  - component: {fileID: 9060083682773560203}
   m_Layer: 0
   m_Name: 01syamu1
   m_TagString: Enemy
@@ -101,7 +101,7 @@ MonoBehaviour:
   target: {fileID: 0}
   turnManager: {fileID: 0}
   moveDuration: 0.1
---- !u!114 &-1623268148915273791
+--- !u!114 &9060083682773560203
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -113,6 +113,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b450e46611fca04419a0ec299a8dcf1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackRange:
-    size: {x: 1, y: 1}
-    offset: {x: 0, y: 0}
+  attackPatterns: []
