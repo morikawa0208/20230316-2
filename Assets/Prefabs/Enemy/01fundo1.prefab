@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3048781933085877887}
   - component: {fileID: 4069702981598908013}
   - component: {fileID: -957470989303566986}
+  - component: {fileID: -1020322190016704100}
   m_Layer: 0
   m_Name: 01fundo1
   m_TagString: Enemy
@@ -113,4 +114,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b450e46611fca04419a0ec299a8dcf1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackPatterns: []
+  attackPatterns:
+  - {fileID: -1020322190016704100}
+--- !u!114 &-1020322190016704100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5508347574834531377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdd529a3f5ddefd4cac73a70c3dee37d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  patternName: Attack
+  attackRanges:
+  - size: {x: 0.7, y: 0.18}
+    offset: {x: -0.35, y: 0}
+  - size: {x: 0.18, y: 0.7}
+    offset: {x: -0.1, y: -0.25}

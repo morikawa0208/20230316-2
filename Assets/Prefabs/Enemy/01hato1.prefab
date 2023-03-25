@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8030915870573881611}
   - component: {fileID: -1671695052325485686}
   - component: {fileID: 1805432293546752632}
+  - component: {fileID: 164938188416714719}
   m_Layer: 0
   m_Name: 01hato1
   m_TagString: Enemy
@@ -113,4 +114,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b450e46611fca04419a0ec299a8dcf1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackPatterns: []
+  attackPatterns:
+  - {fileID: 164938188416714719}
+--- !u!114 &164938188416714719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4185646341323294629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdd529a3f5ddefd4cac73a70c3dee37d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  patternName: Attack
+  attackRanges:
+  - size: {x: 0.7, y: 0.18}
+    offset: {x: -0.35, y: 0}
+  - size: {x: 0.18, y: 0.7}
+    offset: {x: -0.1, y: -0.25}

@@ -9,9 +9,9 @@ public class StageController : MonoBehaviour
         StageManager.Instance.SetStageController(this);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
             StageManager.Instance.ChangeStage(isRight ? 1 : -1, isRight);
         }

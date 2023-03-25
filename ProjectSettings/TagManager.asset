@@ -37,7 +37,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - HitBox
   - stage
   - BG
   m_SortingLayers:
