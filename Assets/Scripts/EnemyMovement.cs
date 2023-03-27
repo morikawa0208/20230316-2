@@ -6,6 +6,7 @@ public class EnemyMovement : MonoBehaviour
     public Transform target; // プレイヤーのTransform
     public TurnManager turnManager; // TurnManagerスクリプトの参照
     public float moveDuration = 0.1f; // 移動にかかる時間
+    public LayerMask collisionLayerMask; // 衝突判定の対象となるレイヤーマスク
 
     private void Start()
     {
@@ -22,7 +23,7 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
-     public void EnemyMove()
+    public void EnemyMove()
     {
         if (target == null || turnManager == null)
         {
@@ -32,7 +33,7 @@ public class EnemyMovement : MonoBehaviour
 
         Vector2 currentPosition = transform.position; // 敵の現在の位置を取得
 
-        Vector2 newPosition = GetClosestGridPosition(currentPosition);
+                Vector2 newPosition = GetClosestGridPosition(currentPosition);
 
         // 敵の位置を更新 (DoTweenでモーションを追加)
         transform.DOMove(newPosition, moveDuration).SetEase(Ease.Linear);
@@ -49,13 +50,23 @@ public class EnemyMovement : MonoBehaviour
             new Vector2(Mathf.Clamp(currentPosition.x - 0.3f, -2.7f, 2.7f), currentPosition.y)
         };
 
-        // 最もプレイヤーに近い移動候補を選択
+        // 最もプレイヤーに近く、他のオブジェクトと重ならない移動候補を選択
         float minDistance = Mathf.Infinity;
         Vector2 closestCandidate = currentPosition;
+        float radius = 0.1f; // 重なり判定の半径
+        Collider2D[] results = new Collider2D[1]; // 重なり判定の結果を格納する配列
+
         foreach (Vector2 candidate in candidates)
         {
             // 候補が現在の位置と同じ場合、スキップ
             if (candidate == currentPosition)
+            {
+                continue;
+            }
+
+            // 重なり判定を行い、他の敵やプレイヤーと重なっている場合、スキップ
+            int overlapCount = Physics2D.OverlapCircleNonAlloc(candidate, radius, results, collisionLayerMask);
+            if (overlapCount > 0)
             {
                 continue;
             }
@@ -71,3 +82,4 @@ public class EnemyMovement : MonoBehaviour
         return closestCandidate;
     }
 }
+
