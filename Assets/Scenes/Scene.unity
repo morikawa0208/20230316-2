@@ -1489,10 +1489,10 @@ Camera:
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
-    y: 0.08949098
-    width: 1
-    height: 0.82101804
+    x: 0.09734711
+    y: 0
+    width: 0.8053058
+    height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -2343,6 +2343,7 @@ GameObject:
   - component: {fileID: 1258469926}
   - component: {fileID: 1258469929}
   - component: {fileID: 1258469927}
+  - component: {fileID: 1258469933}
   - component: {fileID: 1258469930}
   - component: {fileID: 1258469931}
   - component: {fileID: 1258469932}
@@ -2361,7 +2362,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1258469925}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.7, y: 2.2, z: 90}
+  m_LocalPosition: {x: -2.7, y: 2.1, z: 90}
   m_LocalScale: {x: -1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2383,11 +2384,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc747585e92945d45b836b31a4652de0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 0.3
-  minY: 1.6
-  maxY: 2.8
+  minX: -2.7
+  maxX: 2.7
+  minY: 1.5
+  maxY: 2.7
   turnManager: {fileID: 1258469932}
   playerStageMove: {fileID: 0}
+  gridSize: {x: 0.3, y: 0.3}
 --- !u!50 &1258469929
 Rigidbody2D:
   serializedVersion: 4
@@ -2451,6 +2454,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemies: []
+--- !u!114 &1258469933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1258469925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c56a0c6c129cf1e418c1483bd3b09a91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gridSize: {x: 0.3, y: 0.3}
 --- !u!1 &1262691398
 GameObject:
   m_ObjectHideFlags: 0

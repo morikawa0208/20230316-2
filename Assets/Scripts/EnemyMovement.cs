@@ -7,9 +7,14 @@ public class EnemyMovement : MonoBehaviour
     public TurnManager turnManager; // TurnManagerスクリプトの参照
     public float moveDuration = 0.1f; // 移動にかかる時間
     public LayerMask collisionLayerMask; // 衝突判定の対象となるレイヤーマスク
+    public Vector2 gridSize = new Vector2(1f, 1f); // グリッドのサイズを追加
+
+    private GridSnap gridSnap; // GridSnapコンポーネントの参照
 
     private void Start()
     {
+        gridSnap = GetComponent<GridSnap>(); // GridSnapコンポーネントを取得
+
         // プレイヤーのオブジェクトをタグで検索して参照を設定
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
         if (playerObject != null)
@@ -27,13 +32,13 @@ public class EnemyMovement : MonoBehaviour
     {
         if (target == null || turnManager == null)
         {
-            Debug.LogError("EnemyMove: target or turnManager is not set.");
+                        Debug.LogError("EnemyMove: target or turnManager is not set.");
             return;
         }
 
         Vector2 currentPosition = transform.position; // 敵の現在の位置を取得
 
-                Vector2 newPosition = GetClosestGridPosition(currentPosition);
+        Vector2 newPosition = GetClosestGridPosition(currentPosition);
 
         // 敵の位置を更新 (DoTweenでモーションを追加)
         transform.DOMove(newPosition, moveDuration).SetEase(Ease.Linear);
@@ -44,10 +49,10 @@ public class EnemyMovement : MonoBehaviour
         // 上下左右4方向への移動候補を計算
         Vector2[] candidates = new Vector2[]
         {
-            new Vector2(currentPosition.x, Mathf.Clamp(currentPosition.y + 0.3f, 1.6f, 2.8f)),
-            new Vector2(currentPosition.x, Mathf.Clamp(currentPosition.y - 0.3f, 1.6f, 2.8f)),
-            new Vector2(Mathf.Clamp(currentPosition.x + 0.3f, -2.7f, 2.7f), currentPosition.y),
-            new Vector2(Mathf.Clamp(currentPosition.x - 0.3f, -2.7f, 2.7f), currentPosition.y)
+            currentPosition + gridSize * Vector2.up,
+            currentPosition + gridSize * Vector2.down,
+            currentPosition + gridSize * Vector2.right,
+            currentPosition + gridSize * Vector2.left
         };
 
         // 最もプレイヤーに近く、他のオブジェクトと重ならない移動候補を選択
@@ -60,26 +65,29 @@ public class EnemyMovement : MonoBehaviour
         {
             // 候補が現在の位置と同じ場合、スキップ
             if (candidate == currentPosition)
-            {
+                    {
                 continue;
             }
 
+            // 候補の位置をGridSnapを使ってスナップ
+            Vector2 snappedCandidate = new Vector2(Mathf.Round(candidate.x / gridSize.x) * gridSize.x, Mathf.Round(candidate.y / gridSize.y) * gridSize.y);
+
             // 重なり判定を行い、他の敵やプレイヤーと重なっている場合、スキップ
-            int overlapCount = Physics2D.OverlapCircleNonAlloc(candidate, radius, results, collisionLayerMask);
+            int overlapCount = Physics2D.OverlapCircleNonAlloc(snappedCandidate, radius, results, collisionLayerMask);
             if (overlapCount > 0)
             {
                 continue;
             }
 
             // プレイヤーに近いかどうかを確認
-            float distanceToTarget = Vector2.Distance(candidate, target.position);
+            float distanceToTarget = Vector2.Distance(snappedCandidate, target.position);
             if (distanceToTarget < minDistance)
             {
                 minDistance = distanceToTarget;
-                closestCandidate = candidate;
+                closestCandidate = snappedCandidate;
             }
         }
+
         return closestCandidate;
     }
 }
-

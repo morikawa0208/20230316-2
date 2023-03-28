@@ -3,78 +3,65 @@ using DG.Tweening;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float moveSpeed = 0.3f;
-    public float minY = 1.6f;
-    public float maxY = 2.8f;
+    public float minX = -2.7f;
+    public float maxX = 2.7f;
+    public float minY = 1.5f;
+    public float maxY = 2.7f;
     public TurnManager turnManager;
     public PlayerStageMove playerStageMove;
+    public Vector2 gridSize = new Vector2(0.3f, 0.3f);
 
-    private int direction = 1; // プレイヤーの向きを保持するための変数
     private bool isMoving = false;
+    private GridSnap gridSnap;
 
     private void Start()
     {
         playerStageMove = GetComponent<PlayerStageMove>();
-        //turnManager = FindObjectOfType<TurnManager>();
+        gridSnap = GetComponent<GridSnap>();
     }
 
-    public void MoveUp()
+    public void Move(Vector2 direction)
     {
         if (isMoving) return;
 
-        isMoving = true;
-        Vector3 targetPosition = transform.position + new Vector3(0, moveSpeed, 0);
+        Vector3 targetPosition = new Vector3(
+            transform.position.x + direction.x *gridSize.x,
+            Mathf.Round((transform.position.y + direction.y * gridSize.y) / gridSize.y) * gridSize.y,0
+        );
+
+        // 上下移動の制限
         targetPosition.y = Mathf.Clamp(targetPosition.y, minY, maxY);
-        transform.DOMove(targetPosition, 0.1f).SetEase(Ease.Linear).OnComplete(() => {
-            isMoving = false;
-        });
-        turnManager.ChangeTurn();//プレイヤーのターン終了
-    }
 
-    public void MoveDown()
-    {
-        if (isMoving) return;
-
-        isMoving = true;
-        Vector3 targetPosition = transform.position - new Vector3(0, moveSpeed, 0);
-        targetPosition.y = Mathf.Clamp(targetPosition.y, minY, maxY);
-        transform.DOMove(targetPosition, 0.1f).SetEase(Ease.Linear).OnComplete(() => {
-            isMoving = false;
-        });
-        turnManager.ChangeTurn();//プレイヤーのターン終了
-    }
-
-    public void MoveRight()
-    {
-        if (isMoving) return;
-
-        isMoving = true;
-        direction = -1;
-        transform.localScale = new Vector3(direction, transform.localScale.y, transform.localScale.z);
-        Vector3 targetPosition = transform.position + new Vector3(moveSpeed, 0, 0);
-        transform.DOMove(targetPosition, 0.1f).SetEase(Ease.Linear).OnComplete(() => {
-            isMoving = false;
-        });
-        turnManager.ChangeTurn();//プレイヤーのターン終了
-    }
-
-    public void MoveLeft()
-    {
-        if (isMoving) return;
-
-        isMoving = true;
-        direction = 1;
-        transform.localScale = new Vector3(direction, transform.localScale.y, transform.localScale.z);
-        Vector3 targetPosition = transform.position - new Vector3(moveSpeed, 0, 0);
-
-        if (StageManager.Instance.currentStage == 1)
+        // 左移動の制限（ステージが1階の時だけ）
+        if (direction.x < 0 && StageManager.Instance.currentStage == 1)
         {
-            targetPosition.x = Mathf.Clamp(targetPosition.x, -2.7f, targetPosition.x);
+            targetPosition.x = Mathf.Clamp(targetPosition.x, minX, maxX);
         }
 
+        if (targetPosition == transform.position)
+        {
+            return;
+        }
+
+        if (direction.x != 0)
+        {
+            transform.localScale = new Vector3(-direction.x, transform.localScale.y, transform.localScale.z);
+        }
+
+        isMoving = true;
+        gridSnap.enabled = false;
         transform.DOMove(targetPosition, 0.1f).SetEase(Ease.Linear).OnComplete(() => {
             isMoving = false;
+            gridSnap.enabled = true;
         });
-        turnManager.ChangeTurn();//プレイヤーのターン終了
+        turnManager.ChangeTurn(); //プレイヤーのターン終了
     }
+
+public void MoveUp() => Move(Vector2.up);
+
+public void MoveDown() => Move(Vector2.down);
+
+public void MoveRight() => Move(Vector2.right);
+
+public void MoveLeft() => Move(Vector2.left);
 }
