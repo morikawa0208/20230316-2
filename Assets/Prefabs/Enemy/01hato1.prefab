@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 891827581812574113}
   - component: {fileID: 8030915870573881611}
+  - component: {fileID: -7617517650170732787}
   - component: {fileID: -1671695052325485686}
   - component: {fileID: 1805432293546752632}
   - component: {fileID: 164938188416714719}
-  - component: {fileID: -7617517650170732787}
   m_Layer: 28
   m_Name: 01hato1
   m_TagString: Enemy
@@ -88,6 +88,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-7617517650170732787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4185646341323294629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c56a0c6c129cf1e418c1483bd3b09a91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gridSize: {x: 0.3, y: 0.3}
 --- !u!114 &-1671695052325485686
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -102,10 +115,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   turnManager: {fileID: 0}
-  moveDuration: 0.2
-  collisionLayerMask:
-    serializedVersion: 2
-    m_Bits: 402653184
   gridSize: {x: 0.3, y: 0.3}
 --- !u!114 &1805432293546752632
 MonoBehaviour:
@@ -139,16 +148,3 @@ MonoBehaviour:
     offset: {x: -0.35, y: 0}
   - size: {x: 0.18, y: 0.7}
     offset: {x: -0.1, y: -0.25}
---- !u!114 &-7617517650170732787
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4185646341323294629}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c56a0c6c129cf1e418c1483bd3b09a91, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gridSize: {x: 0.3, y: 0.3}

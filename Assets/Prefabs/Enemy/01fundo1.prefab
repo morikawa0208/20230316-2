@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4367085777278551115}
   - component: {fileID: 3048781933085877887}
+  - component: {fileID: -8997885867473802422}
   - component: {fileID: 4069702981598908013}
   - component: {fileID: -957470989303566986}
   - component: {fileID: -1020322190016704100}
-  - component: {fileID: -8997885867473802422}
   m_Layer: 28
   m_Name: 01fundo1
   m_TagString: Enemy
@@ -88,6 +88,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-8997885867473802422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5508347574834531377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c56a0c6c129cf1e418c1483bd3b09a91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gridSize: {x: 0.3, y: 0.3}
 --- !u!114 &4069702981598908013
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -102,10 +115,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   turnManager: {fileID: 0}
-  moveDuration: 0.2
-  collisionLayerMask:
-    serializedVersion: 2
-    m_Bits: 402653184
   gridSize: {x: 0.3, y: 0.3}
 --- !u!114 &-957470989303566986
 MonoBehaviour:
@@ -139,16 +148,3 @@ MonoBehaviour:
     offset: {x: -0.35, y: 0}
   - size: {x: 0.18, y: 0.7}
     offset: {x: -0.1, y: -0.25}
---- !u!114 &-8997885867473802422
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5508347574834531377}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c56a0c6c129cf1e418c1483bd3b09a91, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gridSize: {x: 0.3, y: 0.3}

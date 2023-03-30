@@ -1,13 +1,12 @@
 using UnityEngine;
 using DG.Tweening;
+using System.Collections.Generic;
 
 public class EnemyMovement : MonoBehaviour
 {
     public Transform target; // プレイヤーのTransform
     public TurnManager turnManager; // TurnManagerスクリプトの参照
-    public float moveDuration = 0.1f; // 移動にかかる時間
-    public LayerMask collisionLayerMask; // 衝突判定の対象となるレイヤーマスク
-    public Vector2 gridSize = new Vector2(1f, 1f); // グリッドのサイズを追加
+    public Vector2 gridSize = new Vector2(0.3f, 0.3f); // グリッドのサイズを追加
 
     private GridSnap gridSnap; // GridSnapコンポーネントの参照
 
@@ -32,7 +31,7 @@ public class EnemyMovement : MonoBehaviour
     {
         if (target == null || turnManager == null)
         {
-                        Debug.LogError("EnemyMove: target or turnManager is not set.");
+            Debug.LogError("EnemyMove: target or turnManager is not set.");
             return;
         }
 
@@ -40,8 +39,11 @@ public class EnemyMovement : MonoBehaviour
 
         Vector2 newPosition = GetClosestGridPosition(currentPosition);
 
+        // 敵の向きを更新
+        UpdateEnemyDirection(currentPosition, newPosition);
+
         // 敵の位置を更新 (DoTweenでモーションを追加)
-        transform.DOMove(newPosition, moveDuration).SetEase(Ease.Linear);
+        transform.DOMove(newPosition, 0.1f).SetEase(Ease.Linear);
     }
 
     private Vector2 GetClosestGridPosition(Vector2 currentPosition)
@@ -55,29 +57,20 @@ public class EnemyMovement : MonoBehaviour
             currentPosition + gridSize * Vector2.left
         };
 
-        // 最もプレイヤーに近く、他のオブジェクトと重ならない移動候補を選択
+        // 最もプレイヤーに近い移動候補を選択
         float minDistance = Mathf.Infinity;
         Vector2 closestCandidate = currentPosition;
-        float radius = 0.1f; // 重なり判定の半径
-        Collider2D[] results = new Collider2D[1]; // 重なり判定の結果を格納する配列
 
         foreach (Vector2 candidate in candidates)
         {
             // 候補が現在の位置と同じ場合、スキップ
             if (candidate == currentPosition)
-                    {
+            {
                 continue;
             }
 
             // 候補の位置をGridSnapを使ってスナップ
             Vector2 snappedCandidate = new Vector2(Mathf.Round(candidate.x / gridSize.x) * gridSize.x, Mathf.Round(candidate.y / gridSize.y) * gridSize.y);
-
-            // 重なり判定を行い、他の敵やプレイヤーと重なっている場合、スキップ
-            int overlapCount = Physics2D.OverlapCircleNonAlloc(snappedCandidate, radius, results, collisionLayerMask);
-            if (overlapCount > 0)
-            {
-                continue;
-            }
 
             // プレイヤーに近いかどうかを確認
             float distanceToTarget = Vector2.Distance(snappedCandidate, target.position);
@@ -89,5 +82,22 @@ public class EnemyMovement : MonoBehaviour
         }
 
         return closestCandidate;
+    }
+
+    private void UpdateEnemyDirection(Vector2 currentPosition, Vector2 newPosition)
+    {
+        Vector2 direction = newPosition - currentPosition;
+        float scaleX = Mathf.Abs(transform.localScale.x);
+        float scaleY = transform.localScale.y;
+        float scaleZ = transform.localScale.z;
+
+        if (direction.x > 0)
+        {
+            transform.localScale = new Vector3(-scaleX, scaleY, scaleZ); // 左向き
+        }
+        else if (direction.x < 0)
+        {
+            transform.localScale = new Vector3(scaleX, scaleY, scaleZ); // 右向き
+        }
     }
 }
