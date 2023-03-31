@@ -10,10 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 891827581812574113}
   - component: {fileID: 8030915870573881611}
+  - component: {fileID: -5679009325549937372}
   - component: {fileID: -7617517650170732787}
   - component: {fileID: -1671695052325485686}
-  - component: {fileID: 1805432293546752632}
   - component: {fileID: 164938188416714719}
+  - component: {fileID: 1805432293546752632}
   m_Layer: 28
   m_Name: 01hato1
   m_TagString: Enemy
@@ -88,6 +89,32 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &-5679009325549937372
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4185646341323294629}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.25}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0}
+    oldSize: {x: 0.5, y: 0.5}
+    newSize: {x: 0.5, y: 0.5}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.5, y: 0.5}
+  m_EdgeRadius: 0
 --- !u!114 &-7617517650170732787
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -116,20 +143,6 @@ MonoBehaviour:
   target: {fileID: 0}
   turnManager: {fileID: 0}
   gridSize: {x: 0.3, y: 0.3}
---- !u!114 &1805432293546752632
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4185646341323294629}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b450e46611fca04419a0ec299a8dcf1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attackPatterns:
-  - {fileID: 164938188416714719}
 --- !u!114 &164938188416714719
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -144,7 +157,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   patternName: Attack
   attackRanges:
-  - size: {x: 0.7, y: 0.18}
-    offset: {x: -0.35, y: 0}
-  - size: {x: 0.18, y: 0.7}
-    offset: {x: -0.1, y: -0.25}
+  - size: {x: 0.2, y: 0.25}
+    offset: {x: -0.4, y: 0}
+--- !u!114 &1805432293546752632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4185646341323294629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b450e46611fca04419a0ec299a8dcf1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackPatterns:
+  - {fileID: 164938188416714719}

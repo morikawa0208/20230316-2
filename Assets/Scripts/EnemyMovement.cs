@@ -39,6 +39,12 @@ public class EnemyMovement : MonoBehaviour
 
         Vector2 newPosition = GetClosestGridPosition(currentPosition);
 
+        // 敵が移動先にプレイヤーがいる場合、その場で停止
+        if (newPosition == (Vector2)target.position)
+        {
+            return;
+        }
+
         // 敵の向きを更新
         UpdateEnemyDirection(currentPosition, newPosition);
 
